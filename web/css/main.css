@@ -1,0 +1,322 @@
+:root {
+    --faint: rgba(255, 255, 255, 0.75)
+}
+
+@font-face {
+    font-family: "Convergence";
+    src: url("../fonts/Convergence-Regular.ttf"); /* From Google (:clown:) Fonts GitHub repository [1] */
+}
+
+body {
+    margin: 0; /* Adds no margin for the image */
+    background-color: black; /* Allows to lower the opacity of the image */
+    color: white; /* Renders the text as white */
+    font-family: "Convergence", sans-serif;
+}
+
+
+
+/* Renders the image in the background [2] */
+#root {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 60%;
+}
+
+/* Strickens the header */
+h1 {
+    text-decoration: line-through .45em;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+/* Centers the root div [3] */
+#main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+
+/* Creates an interactive input field; see [4] & [5] */
+
+#url {
+    position: relative;
+    width: 60%; /* Lengthens the URL textbox */
+    display: flex;
+}
+
+/* Stylizes the URL field */
+#input  {
+    width: 100%;
+    border: 2.5px solid;
+    border-radius: 12px;
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    padding: 1.3rem 1.9rem 0;
+    background: none;
+    color: var(--faint); /* Sets a faint white color as default */
+    margin: 0;
+    margin-bottom: -.25em;
+    font-size: 1.25em;
+    overflow: hidden;
+    scrollbar-width: none;
+}
+
+
+#label {
+    position: absolute;
+    left: 1.15rem;
+    top: 1.5rem;
+    padding: 0 .5rem;
+    cursor: text;
+    transition: .2s ease-in;
+    font-size: 1.25em;
+    color: var(--faint);
+}
+
+/* If focused, or text has been written inside, brigthens the textbox; see [6] */
+#input:focus,
+#input:not(:placeholder-shown) {
+    color: white
+}
+
+/* [...] and displays a white box on the field name */
+#input:focus ~ #label,
+#input:not(:placeholder-shown) ~ #label {
+    top: -.5rem;
+    font-size: .9rem;
+    left: 1.3rem;
+    color: #1d2b3c;
+    background: white;
+    border-radius: 4px;
+    padding: .1rem .5rem;
+}
+
+
+/* Stylizes an empty background button that ligthens on hover, and fills on click */
+#query {
+    font-family: inherit;
+    background: none;
+    color: var(--faint);
+    border: 3px solid var(--faint);
+    border-radius: 24px;
+    padding: 1.25em;
+    font-size: 1em;
+    transition: .2s;
+    width: 25em;
+    text-decoration: line-through .5em;
+}
+
+#query:hover {
+    color: white;
+    border-color: white;
+}
+
+#query:active { /* Fills the button as long as the button is held down [7] */
+    background-color: white;
+}
+
+#query.clicked { /* Allows to transition to an uniquely animated spinner; inspired from [8] */
+    color: transparent; /* Disguises any inline text */
+    background-color: transparent;
+    width: 72px;
+    border: 6px solid var(--faint);
+    border-radius: 48px;
+    transition: .4s cubic-bezier(0.175, 0.5, 0.5, 1); /* Allows to build a more sophisticated ease-in, by adjusting the rate of the animation; see [9] & [10] */
+    animation: turn 10s infinite ease-in-out;
+    border-top-color: white;
+}
+
+#query.done { /* Allows to hide the button from the page as part of a transition */
+    transition: .3s ease;
+    opacity: 0;
+}
+
+#query.none { /* After the opacity is none, removes the element from display; see [11] */
+    display: none;
+}
+
+@keyframes turn {
+	5% {
+		transform: rotateZ(25deg);
+    }
+	40% {
+		transform: rotateZ(720deg);
+    }
+	80% {
+		transform: rotateZ(1800deg);
+		background-color: var(--faint);
+		border-color: #ddd;
+    }
+    85% {
+        background-color: white;
+    }
+    90% {
+        transform: rotateZ(-1120deg);
+        background-color: var(--faint);
+    }
+}
+
+#block {
+    display: flex;
+    flex-direction: row;
+    fill: white;
+    transition: all 1s ease-in;
+}
+
+#block.off {
+    display: none;
+}
+
+#block.hidden {
+    padding: 0;
+    opacity: 0;
+}
+
+/* Stylizes a block for the download URL result(s); which is not displayed by default */
+#results {
+    display: flex;
+    padding: 1em 4em;
+    border: solid 2px white;
+    border-radius: 24px;
+    margin-left: 1em;
+}
+
+#results a {
+    text-decoration: underline dotted;
+    color: white;
+}
+
+/* Stylizes a download button */
+#reload {
+    margin-left: 1em;
+    width: 2em;
+    cursor: pointer;
+}
+
+/* Adjusts the location of the advice */
+#warning {
+    margin: -0.5em 0 0 0;
+}
+
+/* Stylizes notes about the design of the website */
+#notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: .6rem;
+    gap: .5em
+}
+
+#notes p {
+    margin: 0; /* Removes any margin of the text to set a gap */
+}
+
+/* Stylizes a block that displays the author of the website */
+#about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#about a {
+    color: #1d2b3c;
+    text-decoration: underline dotted;
+}
+
+#me {
+    padding: .25em .75em .25em .25em;
+    background-color: white;
+    color: #1d2b3c;
+    font-size: 1.75em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: .75em;
+    border-radius: 16px;
+    margin-top: 1em;
+}
+
+#me img {
+    width: 3rem;
+    border-radius: 12px;
+}
+
+#profile {
+    background-color: white;
+    color: #1d2b3c;
+    padding: .4em .6em;
+    margin-top: .6em;
+    border-radius: 4px;
+}
+
+#profile p {
+    font-size: .5rem;
+}
+
+
+/* Stylizes a block of information about the website */
+#info {
+    position: absolute;
+    bottom: 0;
+    left: 1.5%;
+    margin: 0 0 2em 2em;
+    gap: .25em;
+    display: flex;
+    flex-direction: column;
+	padding: 1em 1.5em;
+	border: 1px solid #fff;
+	border-radius: 12px
+}
+
+#info p {
+    font-size: .65em;
+    margin: 0;
+}
+
+#info a, abbr {
+    color: white;
+    text-decoration: none;
+}
+
+#info svg {
+	fill: white;
+	width: 1em;
+	margin-left: .2em;
+}
+
+#info hr { /* Creates a centered line within both lines of information; adapted from [12] */
+	margin: 0;
+	margin-top: .15em;
+	margin-bottom: .15em;
+	margin-left: -2.5em;
+	border: none;
+	border-top: 1px solid #ccc;
+	width: 125%;
+}
+
+/* Sources:
+    * [1]: https://github.com/google/fonts/blob/main/ofl/convergence/Convergence-Regular.ttf
+    * [2]: https://stackoverflow.com/a/31267758
+    * [3]: https://www.freecodecamp.org/news/how-to-center-anything-with-css-align-a-div-text-and-more/
+    * [4]: https://youtube.com/watch?v=v8mRUU3orjI
+    * [5]: https://youtube.com/watch?v=BMphVl9suxA
+    * [6]: https://stackoverflow.com/a/35302732
+    * [7]: https://stackoverflow.com/a/13630259
+    * [8]: https://codepen.io/lucasgruwez/pen/edzrKm
+    * [9]: https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function
+    * [10]: https://css-tricks.com/advanced-css-animation-using-cubic-bezier/
+    * [11]: https://www.impressivewebs.com/animate-display-block-none/
+	* [12]: https://stackoverflow.com/a/1746552 
+*/
